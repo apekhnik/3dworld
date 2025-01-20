@@ -8,9 +8,11 @@ import {easing} from "maath";
 export const CharacterBox = ({
         active,
         setActive,
+        hovered,
+        setHovered,
         name,
         texture,
-        component,
+        Component,
         position = [0, 0, 0],
         rotation,
     }) => {
@@ -18,7 +20,6 @@ export const CharacterBox = ({
     const dblClick = () => {
         setActive(active === name ? null : name)
     }
-
     useFrame((state, delta) => {
         const opened = active === name;
         easing.damp(portalRef.current, 'blend', opened ? 1 : 0, 0.2, delta);
@@ -30,11 +31,19 @@ export const CharacterBox = ({
         name={name}
         position={position}
         rotation={rotation}
+        maxPolarAngle={Math.PI / 2}
+        minPolarAngle={Math.PI / 6}
+        onPointerEnter={() => setHovered(name)}
+        onPointerLeave={() => setHovered(null)}
     >
         <MeshPortalMaterial ref={portalRef} side={THREE.DoubleSide}>
             <ambientLight intensity={0.5}/>
             <Environment preset={'sunset'}/>
-            {component}
+            <Component
+                scale={0.6}
+                position-y={-1}
+                hovered={hovered === name}
+            />
             <mesh>
                 <sphereGeometry args={[6, 64, 64]}/>
                 <meshStandardMaterial map={texture} side={THREE.BackSide}/>

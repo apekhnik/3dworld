@@ -14,13 +14,15 @@ export function AlienTall(props) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone)
   const { actions } = useAnimations(animations, group)
-  console.log(actions)
 
   useEffect(() => {
-    actions['Dance'].reset().fadeIn(0.5).play();
+    const anim = props.hovered ? 'Dance' : 'Idle';
+    actions[anim].reset().fadeIn(0.5).play();
 
-    return () => actions['Idle'].fadeOut(0.5)
-  }, []);
+    return () => actions[anim].fadeOut(0.5)
+  }, [props.hovered]);
+
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">

@@ -17,6 +17,7 @@ export const Experience = () => {
     const map = useTexture('texture/clouds.jpg')
     const cameraRef = useRef();
     const [active, setActive] = useState(null);
+    const [hovered, setHovered] = useState(null);
     const scene = useThree(state => state.scene);
 
     useEffect(() => {
@@ -51,17 +52,21 @@ export const Experience = () => {
         <CharacterBox
             active={active}
             setActive={setActive}
+            hovered={hovered}
+            setHovered={setHovered}
             name={'Alien'}
             texture={map}
-            component={<AlienTall scale={0.6} position-y={-1}/>}
+            Component={AlienTall}
         />
         <CharacterBox
             active={active}
             setActive={setActive}
+            hovered={hovered}
+            setHovered={setHovered}
             name={'Cactus'}
             texture={map}
-            component={<Cactus scale={0.6} position-y={-1}/>}
-            position={[-2, 0, 0]}
+            Component={Cactus}
+            position={[-2.5, 0, 0]}
             rotation={[0, Math.PI / 8, 0]}
         />
     </>
